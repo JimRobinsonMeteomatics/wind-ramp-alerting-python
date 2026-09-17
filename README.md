@@ -1,6 +1,39 @@
-# wind-ramp-alerting-python
-Automated Python alerting pipeline using the Meteomatics Weather API to monitor hub-height wind speeds and detect grid ramp risks.
+# Wind Ramp Alerting Pipeline (Python)
 
+Automated Python alerting pipeline using the **Meteomatics Weather API** to monitor 100-meter turbine hub-height wind speeds and detect steep downward generation ramps across major US power markets (**ERCOT**, **MISO**, and **PJM**).
+
+---
+
+## Overview
+
+In wholesale electricity markets, rapid drops in wind generation can lead to sudden nodal price spikes, imbalance penalties, and immediate dispatch challenges. Standard surface-level forecasts (10m) often fail to capture velocity changes occurring at turbine hub height (100m+).
+
+This project:
+- Ingests high-resolution 15-minute time-series forecast data directly via the `meteomatics.api` connector.
+- Batch-queries multiple key wind corridors across ERCOT, MISO, and PJM in a single API request.
+- Computes rolling 1-hour generation ramp rates (`delta_1h_ms`).
+- Automatically renders and opens a real-time dark-mode HTML operations dashboard highlighting nodes under critical risk.
+
+---
+
+## Prerequisites & Installation
+
+1. **Python 3.9+**
+2. Install the required dependencies:
+
+```bash
+pip install meteomatics pandas
+Obtain API credentials from Meteomatics.
+Quick Start
+Clone this repository:
+git clone https://github.com/YOUR_USERNAME/wind-ramp-alerting-python.git
+cd wind-ramp-alerting-python
+Open ercot_ramp_alert.py and insert your credentials:
+USERNAME = "YOUR_ENTERPRISE_USERNAME"
+PASSWORD = "YOUR_ENTERPRISE_PASSWORD"
+Run the script:
+python ercot_ramp_alert.py
+Source Code (ercot_ramp_alert.py)
 import datetime as dt
 import webbrowser
 import meteomatics.api as api
